@@ -52,3 +52,31 @@ def diversity(ll):  #由于输入的α是不连续的数值，因此记得将输
 #多个自变量组成列表进行函数运算
 ss = diversity([0,0.25,0.5,1,2,4,8,16,32,64,math.inf])
 
+#横纵坐标要求输入形式为列表，且横坐标里的元素是str形式
+#pyecharts画图的时候一定要弄清楚输入的数据类型，直接看x，y输出的内容是否符合要求
+x = [0,0.25,0.5,1,2,4,8,16,32,64,math.inf]
+αx = [str(i) for i in x]
+
+line=(
+    Line()
+    .set_global_opts(
+        title_opts=opts.TitleOpts(title="多样性", pos_left="center"),
+        tooltip_opts=opts.TooltipOpts(is_show=False),
+        xaxis_opts=opts.AxisOpts(type_="category",name = 'α'),
+        yaxis_opts=opts.AxisOpts(
+            type_="value",
+            name = 'diversity',
+            axistick_opts=opts.AxisTickOpts(is_show=True),
+            splitline_opts=opts.SplitLineOpts(is_show=True),
+        )
+    )
+    .add_xaxis(xaxis_data=αx)
+    .add_yaxis(
+        series_name="",
+        y_axis=ss,
+        label_opts=opts.LabelOpts(is_show=False)
+    )
+)
+line.load_javascript()
+
+line.render_notebook()
