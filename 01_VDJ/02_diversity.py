@@ -20,3 +20,6 @@ df1 = df.groupby(['AASeq']).agg({'cloneFraction':sum}).reset_index()
 N = len(df1)
 SUM = sum(df1['cloneFraction'])
 
+#如果用R的vegan包，不需要对cloneFraction进行归一化处理（内部会自行归一化），但自己写的代码需要保证cloneFraction相加为1
+#对dataframe某一列进行相同的操作，用df.map(lambda x: fx)
+df1['cloneFraction'] = df1['cloneFraction'].map(lambda x: x/SUM, na_action='ignore')
