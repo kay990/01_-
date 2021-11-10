@@ -80,3 +80,11 @@ line=(
 line.load_javascript()
 
 line.render_notebook()
+
+#clonolity
+def clonality(df):
+    s = df.map(lambda x: x*math.log(x), na_action='ignore').sum()
+    c = -1*s/math.log(N)
+    #直接用Pielou‘s index求出来的和我们预期的趋势相反，因此要用1-Pielou‘s index
+    return(1-c)
+result_clonality = clonality(df1['cloneFraction'])  
